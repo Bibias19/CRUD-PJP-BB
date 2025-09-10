@@ -310,10 +310,6 @@
     <!--- Fim dos cards--->
   </div>
   <!-- Main e Footer -->
-  <main>
-    <h1>Conteúdo Principal</h1>
-<p>Este é o conteúdo da página.</p>
-</main>
 <footer>
 <p>© 2023 - Todos os direitos reservados</p>
 <a href="#contato">Contato</a>
