@@ -1,0 +1,63 @@
+body {
+      font-family: "Montserrat", sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card-form {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+      padding: 35px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .card-form h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .card-form h2 i {
+      margin-right: 10px;
+      color: #0d6efd;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #444;
+    }
+
+ .btn-primary {
+  width: 100%;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 12px;
+  background-color: #DB7093;
+  border: none; 
+  transition: 0.3s;
+  color: white; 
+}
+
+.btn-primary:hover {
+  background-color: #c66082;
+  transform: scale(1.02);
+}
+
+    .link-cadastro {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #0d6efd;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link-cadastro:hover {
+      text-decoration: underline;
+    }
