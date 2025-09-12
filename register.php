@@ -88,6 +88,8 @@
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
             </div>
+            <div class="col-12" id="link-cadastro">
+        <a href="register.php">Já possui uma conta?Faça login!</a>
         </form>
     </div>
 </body>

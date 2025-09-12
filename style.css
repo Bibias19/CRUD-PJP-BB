@@ -27,15 +27,15 @@ body {
 }
 
 .navbar-brand {
-  margin-left: 0 !important;
-  margin-right: auto;
-  display: block;
   text-align: center;
   font-weight: bold;
   font-size: 30px;
   text-decoration: none;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
+
 
 .navbar-nav {
   list-style: none;

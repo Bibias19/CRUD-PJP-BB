@@ -16,6 +16,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Cherry+Cream+Soda&family=Festive&family=Joti+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oi&family=Original+Surfer&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container justify-content-center">
+    <a class="navbar-brand" href="#" style="color: #20B2AA;">
+      <b>Paper</b><b style="color: #DB7093;">Bloom❀</b>
+    </a>
+  </div>
+</nav>
+  </div>
   <div class="card-form">
     <h2>Login</h2>
     <form class="row g-3">
@@ -30,6 +38,8 @@
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Login</button>
       </div>
+      <div class="col-12" id="link-cadastro">
+        <a href="register.php">Não possui uma conta? Cadastre-se</a>
     </form>
   </div>
 </body>
