@@ -11,7 +11,7 @@ require_once 'conexao.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $codigo = $_POST['codigo'];
     $tipo = $_POST['tipo'];
-    $marca = $_POST['marca']; // Você precisará adicionar um campo para a marca no formulário
+    $marca = $_POST['marca']; 
     $preco = $_POST['preco'];
     $quantidade = $_POST['quantidade'];
 

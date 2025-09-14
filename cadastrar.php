@@ -1,3 +1,40 @@
+<?php
+require_once 'conexao.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+    $confirma_senha = $_POST['confirma_senha'];
+    $cidade = $_POST['cidade'];
+    $estado = $_POST['estado'];
+    $cep = $_POST['cep'];
+
+    // Validação básica
+    if ($senha !== $confirma_senha) {
+        echo "As senhas não coincidem.";
+        exit;
+    }
+
+    // Hash da senha para segurança
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+    // SQL de inserção
+    $sql = "INSERT INTO vendedores (email, senha, cidade, estado, cep) VALUES (?, ?, ?, ?, ?)";
+
+    // Prepara a declaração para evitar injeção de SQL
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssss", $email, $senha_hash, $cidade, $estado, $cep);
+
+    if ($stmt->execute()) {
+        header("Location: login.php?cadastro_sucesso=1");
+    } else {
+        echo "Erro: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -6,16 +43,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Papelaria PaperBloom</title>
     <!-- BOOTSTRAP -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
     <!-- FONT AWESOME -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="css/style-cadastro.css">
     <!-- FONTES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cherry+Cream+Soda&family=Festive&family=Joti+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oi&family=Original+Surfer&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cherry+Cream+Soda&family=Festive&family=Joti+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oi&family=Original+Surfer&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -34,15 +78,20 @@
         <form class="row g-3" action="#" method="post">
             <div class="col-md-12">
                 <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="exemplo@email.com" required>
+                <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="exemplo@email.com"
+                    required>
             </div>
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Senha</label>
                 <input type="password" class="form-control" id="inputPassword4" name="senha" required>
             </div>
-             <div class="col-md-6">
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="inputPassword4" name="senha" required>
+            </div>
+            <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Confirme a senha</label>
-                <input type="confirmpassword" class="form-control" id="inputPassword4" name="confirmarsenha" required>
+                <input type="password" class="form-control" id="inputPassword4" name="confirma_senha" required>
             </div>
             <div class="col-md-6">
                 <label for="inputCity" class="form-label">Cidade</label>
@@ -94,11 +143,12 @@
                 </div>
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary w-100" style="background-color: #20B2AA; border-color: #20B2AA;">Cadastrar</button>
+                <button type="submit" class="btn btn-primary w-100"
+                    style="background-color: #20B2AA; border-color: #20B2AA;">Cadastrar</button>
             </div>
         </form>
 
-        <div id="link-cadastro" class="col-12 mt-3 text-center" >
+        <div id="link-cadastro" class="col-12 mt-3 text-center">
             <a href="login.php">Já possui uma conta? Faça login!</a>
         </div>
     </div>

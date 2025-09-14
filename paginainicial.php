@@ -97,7 +97,7 @@ $result = $conn->query($sql);
           </div>
           <div class="col-md-3">
             <label for="tipo" class="form-label">Marca do produto</label>
-            <input type="text" class="form-control" id="tipo" name="marca" placeholder="Ex: Faber-Castel" required>
+            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ex: Faber-Castel" required>
           </div>
           <div class="col-md-2">
             <label for="preco" class="form-label">Preço</label>
@@ -108,6 +108,7 @@ $result = $conn->query($sql);
             <label for="quantidade" class="form-label">Quantidade</label>
             <input type="number" class="form-control" id="quantidade" name="quantidade" placeholder="0" required>
           </div>
+        
           <div class="col-md-12 d-flex" style="margin-left:40%;" >
             <button type="submit" class="btn btn-primary" style="align-items: center;">Adicionar Produto</button>
           </div>
