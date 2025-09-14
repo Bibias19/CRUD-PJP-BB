@@ -1,7 +1,12 @@
+/* Reset e fontes */
 body {
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+ 
 
 }
 
@@ -12,6 +17,7 @@ body {
   font-style: normal;
 }
 
+/* Navbar */
 .navbar {
   background-color: #F0F8FF!important;
   border: solid 1px #e3e3e3;
@@ -36,7 +42,6 @@ body {
   transform: translateX(-50%);
 }
 
-
 .navbar-nav {
   list-style: none;
   padding: 0;
@@ -44,17 +49,18 @@ body {
   display: flex;
 }
 
-.main-content {
-  padding: 20px;
-  text-align: center;
-}
-
 .nav-link {
   color: #333;
   text-decoration: none;
   padding: 10px 15px;
   font-size: 16px;
+}
 
+/* Conteúdo principal */
+.main-content {
+  padding: 20px;
+  text-align: center;
+  flex: 1; /* permite que o main cresça e empurre o footer para baixo */
 }
 
 .container {
@@ -62,38 +68,35 @@ body {
   margin-top: 30px;
 }
 
+/* Textos */
 .bem-vindo {
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   color: #333;
-  margin-bottom: 2px;
+  text-decoration: bold;
+}
+#tabela-produto{
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  width: 950px;
+  max-width: 90%;
+  height: 160px;
+
 }
 
-.avisos-imp-prod {
-  font-size: 18px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 500;
-  font-style: italic;
-  color: #555;
+.btn-primary {
+  background-color: #DB7093;
+ border: none;
+}
+.btn-primary:hover {
+  background-color: #fd4c87;
+  transform: scale(1.02);
 }
 
-/* Estilos do carrossel */
-.carousel.slide {
-  width: 80%;
-  max-width: 8000px;
-  margin: 0 auto;
-}
-
-.carousel-item img {
-  width: 100%;
-  height: 300px;
-}
-.carousel-caption h5,
-.carousel-caption p {
-  color: black;
-}
+/* Produtos lançados e cards */
 .produtos-lançados {
   font-size: 24px;
   font-family: 'Poppins', sans-serif;
@@ -101,7 +104,6 @@ body {
   color: #333;
   padding-left: 255px;
   margin-top: 40px;
-
 }
 
 .cards-produtos {
@@ -117,50 +119,17 @@ body {
   height: 260px;
 }
 
-
+/* Footer sticky */
 footer {
   background-color: #F0F8FF;
   color: #000000;
   text-align: center;
   padding: 20px;
   width: 100%;
-  margin-top: 20px;
+  margin-top: auto; 
 }
 
 footer a {
   color: #000000;
   text-decoration: none;
-}
-
-.fa-circle-user {
-  font-size: 30px;
-  color: #5a5a5a;
-  margin: 10px;
-  padding: 5px;
-
-}
-
-.fa-circle-user:hover {
-  color: #000000;
-  cursor: pointer;
-}
-form[role="search"] {
-  max-width: 400px;     
-}
-
-form[role="search"] input {
-  border-radius: 20px; 
-  border: 2px solid #000000;
-}
-
-form[role="search"] button {
-  border-radius: 20px;
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
-  border: none;
-  transition: 0.3s;
-}
-
-form[role="search"] button:hover {
-  background-color: #494749;
 }

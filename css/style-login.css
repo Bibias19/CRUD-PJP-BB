@@ -112,16 +112,11 @@ body {
 #link-cadastro a {
   color: #000000;
   text-decoration: none!important;
+  text-align: center;
 }
 
 @media (max-width: 576px) {
   .card-form {
     padding: 25px;
   }
-}
-.ajuste-tamanho{
-  max-width: 1200px!important;
-  max-height:100%!important;
-  margin: 0 auto;
-  padding: 20px;
 }
