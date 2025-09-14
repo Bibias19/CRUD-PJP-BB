@@ -42,7 +42,7 @@
             </div>
              <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Confirme a senha</label>
-                <input type="password" class="form-control" id="inputPassword4" name="senha" required>
+                <input type="confirmpassword" class="form-control" id="inputPassword4" name="confirmarsenha" required>
             </div>
             <div class="col-md-6">
                 <label for="inputCity" class="form-label">Cidade</label>
@@ -99,7 +99,7 @@
         </form>
 
         <div id="link-cadastro" class="col-12 mt-3 text-center" >
-            <a href="login.html">Já possui uma conta? Faça login!</a>
+            <a href="login.php">Já possui uma conta? Faça login!</a>
         </div>
     </div>
 </body>

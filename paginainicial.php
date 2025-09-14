@@ -1,3 +1,18 @@
+<?php
+session_start();
+// Verifica se o usuário está logado
+if (!isset($_SESSION['vendedor_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+require_once 'conexao.php';
+
+// Consulta para buscar todos os produtos
+$sql = "SELECT * FROM produtos";
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -82,7 +97,7 @@
           </div>
           <div class="col-md-3">
             <label for="tipo" class="form-label">Marca do produto</label>
-            <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Ex: Faber-Castel" required>
+            <input type="text" class="form-control" id="tipo" name="marca" placeholder="Ex: Faber-Castel" required>
           </div>
           <div class="col-md-2">
             <label for="preco" class="form-label">Preço</label>
@@ -100,6 +115,40 @@
       </div>
     </div>
   </div>
+   <h3 class="mt-5">Produtos em Estoque</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row["codigo"] . "</td>";
+                        echo "<td>" . $row["tipo"] . "</td>";
+                        echo "<td>" . $row["marca"] . "</td>";
+                        echo "<td>R$ " . number_format($row["preco"], 2, ',', '.') . "</td>";
+                        echo "<td>" . $row["quantidade"] . "</td>";
+                        echo "<td><a href='editar_produto.php?id=" . $row["id"] . "' class='btn btn-sm btn-warning'>Editar</a> <a href='excluir_produto.php?id=" . $row["id"] . "' class='btn btn-sm btn-danger'>Excluir</a></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='6'>Nenhum produto cadastrado.</td></tr>";
+                }
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
   <!--- Fim dos cards--->
   </div>

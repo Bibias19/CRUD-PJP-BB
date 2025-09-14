@@ -1,3 +1,44 @@
+<?php
+// Inicia a sessão
+session_start();
+
+// Inclui o arquivo de conexão
+require_once 'conexao.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+
+    // SQL para buscar o usuário
+    $sql = "SELECT id, senha FROM vendedores WHERE email = ?";
+
+    // Prepara a declaração
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $senha_hash = $row['senha'];
+
+        // Verifica a senha
+        if (password_verify($senha, $senha_hash)) {
+            // Senha correta, cria a sessão
+            $_SESSION['vendedor_id'] = $row['id'];
+            $_SESSION['email'] = $email;
+            header("Location: paginainicial.php");
+        } else {
+            echo "Senha incorreta.";
+        }
+    } else {
+        echo "Nenhum usuário encontrado com este e-mail.";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -39,7 +80,7 @@
         <button type="submit" class="btn btn-primary">Login</button>
       </div>
       <div class="col-12" id="link-cadastro">
-        <a href="register.html">Não possui uma conta? Cadastre-se</a>
+        <a href="cadastrar.php">Não possui uma conta? Cadastre-se</a>
     </form>
   </div>
 </body>

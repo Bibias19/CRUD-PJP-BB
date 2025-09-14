@@ -35,8 +35,8 @@
         <div class="w-100">
             <h1 class="mb-4">Bem-vindo, vendedor(a)!</h1>
             <div class="d-grid gap-3 col-3 mx-auto">
-                <a href="login.html" class="btn btn-primary btn-lg" id="log">Login</a>
-                <a href="register.html" class="btn btn-success btn-lg" id="cad">Cadastrar-se</a>
+                <a href="logar.php" class="btn btn-primary btn-lg" id="log">Login</a>
+                <a href="cadastrar.php" class="btn btn-success btn-lg" id="cad">Cadastrar-se</a>
             </div>
         </div>
     </main>
