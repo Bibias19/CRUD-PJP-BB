@@ -1,40 +1,44 @@
+<!--ja editado-->
 <?php
 require_once 'conexao.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-    $confirma_senha = $_POST['confirma_senha'];
-    $cidade = $_POST['cidade'];
-    $estado = $_POST['estado'];
-    $cep = $_POST['cep'];
+try {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = $_POST['email'] ?? null;
+        $senha = $_POST['senha'] ?? null;
+        $confirma_senha = $_POST['confirma_senha'] ?? null;
 
-    // Validação básica
-    if ($senha !== $confirma_senha) {
-        echo "As senhas não coincidem.";
-        exit;
+        if ($email && $senha && $confirma_senha) {
+            if ($senha !== $confirma_senha) {
+                throw new Exception("As senhas não coincidem.");
+            }
+            $hashed_password = password_hash($senha, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO usuarios (email, senha,confirma_senha) VALUES (?, ?, ?)";
+            $stmt = $conexao->prepare($sql);
+            if ($stmt) {
+                $stmt->bind_param("ss", $email, $hashed_password);
+                if ($stmt->execute()) {
+                    $_SESSION['message'] = 'Cadastro realizado com sucesso!';
+                    header("Location: logar.php");
+                    exit();
+                } else {
+                    throw new Exception("Erro ao cadastrar: " . $stmt->error);
+                }
+                $stmt->close();
+            } else {
+                throw new Exception("Erro ao preparar consulta: " . $conexao->error);
+            }
+        } else {
+            throw new Exception("Preencha todos os campos.");
+        }
     }
-
-    // Hash da senha para segurança
-    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-
-    // SQL de inserção
-    $sql = "INSERT INTO vendedores (email, senha, cidade, estado, cep) VALUES (?, ?, ?, ?, ?)";
-
-    // Prepara a declaração para evitar injeção de SQL
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $email, $senha_hash, $cidade, $estado, $cep);
-
-    if ($stmt->execute()) {
-        header("Location: login.php?cadastro_sucesso=1");
-    } else {
-        echo "Erro: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $conn->close();
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage();
+} finally {
+    $conexao->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -75,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Formulário de Cadastro -->
     <div class="card-form container mt-5 p-4 shadow-sm rounded">
         <h2 class="mb-4">Cadastro</h2>
-        <form class="row g-3" action="#" method="post">
+        <form class="row g-3" action="register_logic.php" method="post">
             <div class="col-md-12">
                 <label for="inputEmail4" class="form-label">Email</label>
                 <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="exemplo@email.com"
@@ -86,61 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" class="form-control" id="inputPassword4" name="senha" required>
             </div>
             <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="inputPassword4" name="senha" required>
-            </div>
-            <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Confirme a senha</label>
                 <input type="password" class="form-control" id="inputPassword4" name="confirma_senha" required>
-            </div>
-            <div class="col-md-6">
-                <label for="inputCity" class="form-label">Cidade</label>
-                <input type="text" class="form-control" id="inputCity" name="cidade" required>
-            </div>
-            <div class="col-md-4">
-                <label for="inputState" class="form-label">Estado</label>
-                <select id="inputState" class="form-select" name="estado" required>
-                    <option value="" selected disabled>Escolha...</option>
-                    <option value="AC">AC - Acre</option>
-                    <option value="AL">AL - Alagoas</option>
-                    <option value="AP">AP - Amapá</option>
-                    <option value="AM">AM - Amazonas</option>
-                    <option value="BA">BA - Bahia</option>
-                    <option value="CE">CE - Ceará</option>
-                    <option value="DF">DF - Distrito Federal</option>
-                    <option value="ES">ES - Espírito Santo</option>
-                    <option value="GO">GO - Goiás</option>
-                    <option value="MA">MA - Maranhão</option>
-                    <option value="MT">MT - Mato Grosso</option>
-                    <option value="MS">MS - Mato Grosso do Sul</option>
-                    <option value="MG">MG - Minas Gerais</option>
-                    <option value="PA">PA - Pará</option>
-                    <option value="PB">PB - Paraíba</option>
-                    <option value="PR">PR - Paraná</option>
-                    <option value="PE">PE - Pernambuco</option>
-                    <option value="PI">PI - Piauí</option>
-                    <option value="RJ">RJ - Rio de Janeiro</option>
-                    <option value="RN">RN - Rio Grande do Norte</option>
-                    <option value="RS">RS - Rio Grande do Sul</option>
-                    <option value="RO">RO - Rondônia</option>
-                    <option value="RR">RR - Roraima</option>
-                    <option value="SC">SC - Santa Catarina</option>
-                    <option value="SP">SP - São Paulo</option>
-                    <option value="SE">SE - Sergipe</option>
-                    <option value="TO">TO - Tocantins</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label for="inputZip" class="form-label">CEP</label>
-                <input type="text" class="form-control" id="inputZip" name="cep" required>
-            </div>
-            <div class="col-12">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
-                    <label class="form-check-label" for="gridCheck">
-                        Aceito os termos de uso
-                    </label>
-                </div>
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary w-100"
@@ -149,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
 
         <div id="link-cadastro" class="col-12 mt-3 text-center">
-            <a href="login.php">Já possui uma conta? Faça login!</a>
+            <a href="logar.php">Já possui uma conta? Faça login!</a>
         </div>
     </div>
 </body>

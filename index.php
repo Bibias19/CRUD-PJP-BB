@@ -1,3 +1,4 @@
+<!--ja editado-->
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,39 +16,40 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherry+Cream+Soda&family=Festive&family=Joti+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oi&family=Original+Surfer&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div style="height:100vh; 
             background: url('img/6575431-papel-de-parede-bonito-natureza-flor-flor-folha-minimalista-feminino-fundo-vetor.jpg') no-repeat center center fixed; 
             background-size: cover;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#" style="color: #20B2AA; "><b>Paper</b><b style="color: #DB7093;">Bloom❀</b></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                aria-label="Alternar navegação">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Conteúdo principal -->
-    <main class="flex-grow-1 d-flex align-items-center justify-content-center text-center">
-        <div class="w-100">
-            <h1 class="mb-4">Bem-vindo, vendedor(a)!</h1>
-            <div class="d-grid gap-3 col-3 mx-auto">
-                <a href="logar.php" class="btn btn-primary btn-lg" id="log">Login</a>
-                <a href="cadastrar.php" class="btn btn-success btn-lg" id="cad">Cadastrar-se</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#" style="color: #20B2AA; "><b>Paper</b><b style="color: #DB7093;">Bloom❀</b></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Alternar navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
-        </div>
-    </main>
+        </nav>
 
-    <!-- Bootstrap JS -->
-    <!-- BOOTSTRAP 4 script-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <script>
-    </script>
+        <!-- Conteúdo principal -->
+        <main class="flex-grow-1 d-flex align-items-center justify-content-center text-center">
+            <div class="w-100">
+                <h1 class="mb-4">Bem-vindo, vendedor(a)!</h1>
+                <div class="d-grid gap-3 col-3 mx-auto">
+                    <a href="logar.php" class="btn btn-primary btn-lg" id="log">Login</a>
+                    <a href="cadastrar.php" class="btn btn-success btn-lg" id="cad">Cadastrar-se</a>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bootstrap JS -->
+        <!-- BOOTSTRAP 4 script-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script>
+        </script>
 </body>
 
 </html>

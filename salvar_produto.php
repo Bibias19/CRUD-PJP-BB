@@ -1,31 +1,51 @@
+<!-- Ja editado -->
+
 <?php
 session_start();
-// Verifica se o usuário está logado
-if (!isset($_SESSION['vendedor_id'])) {
-    header("Location: login.php");
+if (!isset($_SESSION['id'])) {
+    header("Location: logar.php");
     exit;
 }
 
 require_once 'conexao.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $codigo = $_POST['codigo'];
-    $tipo = $_POST['tipo'];
-    $marca = $_POST['marca']; 
-    $preco = $_POST['preco'];
-    $quantidade = $_POST['quantidade'];
+try {
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $codigo = isset($_POST['codigo']) ? trim($_POST['codigo']) : null;
+        $tipo = isset($_POST['tipo']) ? trim($_POST['tipo']) : null;
+        $marca = isset($_POST['marca']) ? trim($_POST['marca']) : null;
+        $preco = isset($_POST['preco']) ? filter_var($_POST['preco'], FILTER_VALIDATE_FLOAT) : null;
+        $quantidade = isset($_POST['quantidade']) ? filter_var($_POST['quantidade'], FILTER_VALIDATE_INT) : null;
 
-    $sql = "INSERT INTO produtos (codigo, tipo, marca, preco, quantidade) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssdi", $codigo, $tipo, $marca, $preco, $quantidade);
+        // Validação dos campos obrigatórios
+        if ($codigo && $tipo && $marca && $preco !== false && $quantidade !== false) {
+            $sql = "INSERT INTO paperbloom (codigo, tipo, marca, preco, quantidade) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $conexao->prepare($sql);
 
-    if ($stmt->execute()) {
-        header("Location: paginainicial.php");
+            if ($stmt) {
+                $stmt->bind_param("sssdi", $codigo, $tipo, $marca, $preco, $quantidade);
+                if ($stmt->execute()) {
+                    $_SESSION['message'] = 'Produto Salvo com Sucesso';
+                    $_SESSION['message_type'] = 'success';
+                    header("Location: paginainicial.php");
+                    exit();
+                } else {
+                    $_SESSION['message'] = 'Erro ao salvar produto';
+                    $_SESSION['message_type'] = 'danger';
+                    throw new Exception("Error executing query: " . $stmt->error);
+                }
+                $stmt->close();
+            } else {
+                throw new Exception("Error preparing statement: " . $conexao->error);
+            }
+        } else {
+            throw new Exception("Todos os campos são obrigatórios e válidos.");
+        }
     } else {
-        echo "Erro ao adicionar produto: " . $stmt->error;
+        throw new Exception("Invalid request method.");
     }
-
-    $stmt->close();
-    $conn->close();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+} finally {
+    $conexao->close();
 }
-?>
