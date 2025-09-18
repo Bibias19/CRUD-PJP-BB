@@ -19,25 +19,29 @@ try {
 
         // Validação dos campos obrigatórios
         if ($codigo && $tipo && $marca && $preco !== false && $quantidade !== false) {
-            $sql = "INSERT INTO paperbloom (codigo, tipo, marca, preco, quantidade) VALUES (?, ?, ?, ?, ?)";
-            $stmt = $conexao->prepare($sql);
-
-            if ($stmt) {
-                $stmt->bind_param("sssdi", $codigo, $tipo, $marca, $preco, $quantidade);
-                if ($stmt->execute()) {
-                    $_SESSION['message'] = 'Produto Salvo com Sucesso';
-                    $_SESSION['message_type'] = 'success';
-                    header("Location: paginainicial.php");
-                    exit();
-                } else {
-                    $_SESSION['message'] = 'Erro ao salvar produto';
-                    $_SESSION['message_type'] = 'danger';
-                    throw new Exception("Error executing query: " . $stmt->error);
-                }
-                $stmt->close();
+            if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
+                $imagem = file_get_contents($_FILES['imagem']['tmp_name']);
             } else {
-                throw new Exception("Error preparing statement: " . $conexao->error);
+                $imagem = file_get_contents('img/Imagem indisponivel.png');
             }
+
+            // Depois, insira no banco:
+            $sql = "INSERT INTO produtos (imagem, codigo, tipo, marca, preco, quantidade) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $conexao->prepare($sql);
+            $stmt->bind_param("bsssdi", $imagem, $codigo, $tipo, $marca, $preco, $quantidade);
+            // Para 'b' (blob), use send_long_data:
+            $stmt->send_long_data(0, $imagem);
+            if ($stmt->execute()) {
+                $_SESSION['message'] = 'Produto Salvo com Sucesso';
+                $_SESSION['message_type'] = 'success';
+                header("Location: paginainicial.php");
+                exit();
+            } else {
+                $_SESSION['message'] = 'Erro ao salvar produto';
+                $_SESSION['message_type'] = 'danger';
+                throw new Exception("Error executing query: " . $stmt->error);
+            }
+            $stmt->close();
         } else {
             throw new Exception("Todos os campos são obrigatórios e válidos.");
         }

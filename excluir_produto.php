@@ -11,10 +11,11 @@ require_once 'conexao.php';
 try {
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $sql = "DELETE FROM produtos WHERE id = ?";
+        // Corrigir - tabela errada
+        $sql = "DELETE FROM produtos WHERE id = ?"; // Mudar de produtos para paperbloom
         $stmt = $conexao->prepare($sql);
         if ($stmt) {
-         $stmt->bind_param("i", $id);
+            $stmt->bind_param("i", $id);
             if ($stmt->execute()) {
                 session_start();
                 $_SESSION['message'] = 'Produto Deletado com Sucesso';
@@ -33,7 +34,7 @@ try {
             throw new Exception("Error preparing statement: " . $conexao->error);
         }
     } else {
-        throw new Exception("No ID provided for deletion."); 
+        throw new Exception("No ID provided for deletion.");
     }
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
@@ -41,4 +42,3 @@ try {
     $conexao->close();
 }
 ?>
-

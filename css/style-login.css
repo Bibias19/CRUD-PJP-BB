@@ -1,9 +1,7 @@
   * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background:url('img/6575431-papel-de-parede-bonito-natureza-flor-flor-folha-minimalista-feminino-fundo-vetor.jpg') no-repeat center center fixed;
-    background-size: cover;
+    box-sizing: border-box
 
   }
 body {

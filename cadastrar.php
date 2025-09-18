@@ -1,6 +1,7 @@
 <!--ja editado-->
 <?php
 require_once 'conexao.php';
+session_start();
 
 try {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,13 +13,16 @@ try {
             if ($senha !== $confirma_senha) {
                 throw new Exception("As senhas não coincidem.");
             }
+            
             $hashed_password = password_hash($senha, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO usuarios (email, senha,confirma_senha) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO usuarios (email, senha) VALUES (?, ?)";
             $stmt = $conexao->prepare($sql);
+            
             if ($stmt) {
                 $stmt->bind_param("ss", $email, $hashed_password);
                 if ($stmt->execute()) {
                     $_SESSION['message'] = 'Cadastro realizado com sucesso!';
+                    $_SESSION['message_type'] = 'success';
                     header("Location: logar.php");
                     exit();
                 } else {
@@ -79,7 +83,7 @@ try {
     <!-- Formulário de Cadastro -->
     <div class="card-form container mt-5 p-4 shadow-sm rounded">
         <h2 class="mb-4">Cadastro</h2>
-        <form class="row g-3" action="register_logic.php" method="post">
+        <form class="row g-3" action="register_logic.php" method="POST">
             <div class="col-md-12">
                 <label for="inputEmail4" class="form-label">Email</label>
                 <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="exemplo@email.com"

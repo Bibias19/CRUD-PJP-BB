@@ -1,11 +1,17 @@
-<!--ja editado-->
 <?php
 session_start();
 if (!isset($_SESSION['id'])) {
   header("Location: logar.php");
   exit();
 }
+require_once 'conexao.php'; // MOVER para depois da verificação de sessão
+
+// TESTE: Verificar se a conexão está funcionando
+if ($conexao->connect_error) {
+  die("Erro de conexão: " . $conexao->connect_error);
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -16,6 +22,7 @@ if (!isset($_SESSION['id'])) {
   <!-- BOOTSTRAP 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -31,8 +38,6 @@ if (!isset($_SESSION['id'])) {
   <?php if (isset($_SESSION['message'])): ?>
     <div class="alert alert-<?= $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
       <?= $_SESSION['message'] ?>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <?php unset($_SESSION['message']); ?>
@@ -41,7 +46,14 @@ if (!isset($_SESSION['id'])) {
   <div class="container my-5">
     <!-- Formulário de cadastro -->
     <h3>Adicionar Produto</h3>
-    <form action="salvar_produto.php" method="POST" class="row g-3 mb-4">
+    <form action="salvar_produto.php" method="POST" class="row g-3 mb-4" enctype="multipart/form-data">
+      <div class="col-md-2">
+        <label class="col-sm-3 col-form-label">Imagem</label>
+        <div class="col-sm-6">
+          <input type="file" class="form-control" name="imagem" accept="img/*" onchange="previewImage(event)">
+          <img id="preview" src="img\Imagem indisponivel.png" style="max-width:120px;max-height:120px;margin-top:10px; ">
+        </div>
+      </div>
       <div class="col-md-2">
         <label for="codigo" class="form-label">Código</label>
         <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Ex: 001" required>
@@ -69,51 +81,65 @@ if (!isset($_SESSION['id'])) {
 
     <!-- Tabela de produtos -->
     <h3 class="mt-5">Produtos em Estoque</h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Tipo</th>
-          <th>Marca</th>
-          <th>Preço</th>
-          <th>Quantidade</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        require_once 'conexao.php';
-        $query = "SELECT id, tipo, marca, preco, quantidade FROM paperbloom";
-        $$result = $conexao->query($query);
+    <?php
+    // VERIFICAR primeiro se a tabela existe
+    $tableCheck = $conexao->query("SHOW TABLES LIKE 'produtos'");
+    if ($tableCheck->num_rows == 0) {
+      echo "<div class='alert alert-danger'>A tabela 'paperbloom' não existe no banco de dados.</div>";
+    } else {
+      // Consulta corrigida - verificar o nome exato da tabela
+      $query = "SELECT id, imagem, codigo, tipo, marca, preco, quantidade FROM produtos";
+      $result = $conexao->query($query);
 
+      // DEBUG: Mostrar número de resultados
+      echo "<div class='alert alert-info'>Produtos encontrados: " . $result->num_rows . "</div>";
+
+      if ($result) {
         if ($result->num_rows > 0) {
-          while ($row = $result->fetch_assoc()) {
-        ?>
-            <tr>
-              <td> <?php echo $row['codigo']; ?></td>
-              <td> <?php echo $row['tipo']; ?></td>
-              <td><?php echo $row['marca']; ?></td>
-              <td><?php echo "R$ " . number_format($row['preco'], 2, ',', '.'); ?></td>
-              <td><?php echo $row['quantidade']; ?></td>
-              <td>
-                <a href="editar_produto.php?id=<?= $row['id']; ?>" class="btn btn-secondary">
-                  <i class="fas fa-marker"></i>
-                </a>
-                <a href="excluir_produto.php?id=<?= $row['id']; ?>" class="btn btn-danger">
-                  <i class="far fa-trash-alt"></i>
-                </a>
-              </td>
-            </tr>
-        <?php
-          }
+    ?>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Imagem</th>
+                <th>Código</th>
+                <th>Tipo</th>
+                <th>Marca</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                  <td><img src='imagem.php?id=<?= $row['id'] ?>' style='max-width:80px;max-height:80px;'></td>
+                  <td><?php echo htmlspecialchars($row['codigo']); ?></td>
+                  <td><?php echo htmlspecialchars($row['tipo']); ?></td>
+                  <td><?php echo htmlspecialchars($row['marca']); ?></td>
+                  <td><?php echo "R$ " . number_format($row['preco'], 2, ',', '.'); ?></td>
+                  <td><?php echo $row['quantidade']; ?></td>
+                  <td>
+                    <a href="editar_produto.php?id=<?= $row['id']; ?>" class="btn btn-secondary">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="excluir_produto.php?id=<?= $row['id']; ?>" class="btn btn-danger">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
+                  </td>
+                </tr>
+              <?php endwhile; ?>
+            </tbody>
+          </table>
+    <?php
         } else {
-          echo "<tr><td colspan='6' class='text-center'>Nenhum produto cadastrado.</td></tr>";
+          echo "<div class='alert alert-warning'>Nenhum produto cadastrado.</div>";
         }
-        $stmt->close();
-        $conexao->close();
-        ?>
-      </tbody>
-    </table>
+      } else {
+        echo "<div class='alert alert-danger'>Erro na consulta: " . $conexao->error . "</div>";
+      }
+    }
+    $conexao->close();
+    ?>
   </div>
 
   <!-- Footer -->
@@ -121,6 +147,26 @@ if (!isset($_SESSION['id'])) {
     <p>© 2025 - Todos os direitos reservados</p>
     <a href="mailto:PaperBloom@gmail.com">PaperBloom@gmail.com</a>
   </footer>
+
+  <script src="js/script.js"></script>
 </body>
 
 </html>
+
+<?php
+if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
+    $nome_arquivo = basename($_FILES['imagem']['name']);
+    $caminho = 'img/' . $nome_arquivo;
+    move_uploaded_file($_FILES['imagem']['tmp_name'], $caminho);
+} else {
+    $caminho = 'img/Imagem indisponivel.png';
+}
+?>
+
+<?php
+if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
+    $imagem = file_get_contents($_FILES['imagem']['tmp_name']);
+} else {
+    $imagem = file_get_contents('img/Imagem indisponivel.png');
+}
+?>

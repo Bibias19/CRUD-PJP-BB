@@ -18,7 +18,7 @@ try {
         $quantidade = filter_var($_POST['quantidade'], FILTER_VALIDATE_INT);
 
         if ($id && $codigo && $tipo && $marca && $preco !== false && $quantidade !== false) {
-            $sql = "UPDATE paperbloom SET codigo=?, tipo=?, marca=?, preco=?, quantidade=? WHERE id=?";
+            $sql = "UPDATE produtos SET codigo=?, tipo=?, marca=?, preco=?, quantidade=? WHERE id=?";
             $stmt = $conexao->prepare($sql);
             if ($stmt) {
                 $stmt->bind_param("ssssdi", $codigo, $tipo, $marca, $preco, $quantidade, $id);

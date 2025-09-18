@@ -22,7 +22,7 @@ try {
                         $_SESSION['senha'] = $usuarios['senha'];
                         $_SESSION['message'] = 'Bem-vindo, ' . htmlspecialchars($usuarios['email']) . '!';
                         $_SESSION['message_type'] = 'primary';
-                        header("Location: paginaincial.php");
+                        header("Location: paginainicial.php");
                         exit();
                     } else {
                         throw new Exception("Email ou senha inválidos.");

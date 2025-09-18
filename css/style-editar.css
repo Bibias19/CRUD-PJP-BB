@@ -1,0 +1,111 @@
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+
+  }
+  .navbar-brand {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  text-decoration: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.navbar {
+    width: 100%;
+    height: 70px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center; /* logo centralizada */
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  .navbar .container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .navbar-brand {
+    text-align: center!important;
+    font-weight: bold;
+    font-size: 30px;
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+.card-form {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 1px 9px 25px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    width: 90%;
+    margin: 0 auto 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-form h2 {
+    color: #333;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+.form-label {
+    font-weight: 500;
+    color: #555;
+}
+.form-control {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    transition: all 0.3s;
+}
+.form-control:focus {
+    border-color: #DB7093;
+    box-shadow: 0 0 0 0.25rem rgba(219, 112, 147, 0.25);
+}
+
+.img-container {
+    border: 1px dashed #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.product-image {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 5px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 20px;
+}
+
+#salvar{
+  background-color: #DB7093!important; 
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #fd4c87;
+  transform: scale(1.02);
+}
+#cancelar {
+  background-color: #20B2AA;
+  border: none;
+}
