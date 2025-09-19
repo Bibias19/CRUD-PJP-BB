@@ -13,11 +13,11 @@ try {
             if ($senha !== $confirma_senha) {
                 throw new Exception("As senhas não coincidem.");
             }
-            
+
             $hashed_password = password_hash($senha, PASSWORD_DEFAULT);
             $sql = "INSERT INTO usuarios (email, senha) VALUES (?, ?)";
             $stmt = $conexao->prepare($sql);
-            
+
             if ($stmt) {
                 $stmt->bind_param("ss", $email, $hashed_password);
                 if ($stmt->execute()) {
@@ -72,41 +72,6 @@ try {
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container justify-content-center">
-            <a class="navbar-brand" href="#" style="color: #20B2AA;">
-                <b>Paper</b><b style="color: #DB7093;">Bloom❀</b>
-            </a>
-        </div>
-    </nav>
-
-    <!-- Formulário de Cadastro -->
-    <div class="card-form container mt-5 p-4 shadow-sm rounded">
-        <h2 class="mb-4">Cadastro</h2>
-        <form class="row g-3" action="register_logic.php" method="POST">
-            <div class="col-md-12">
-                <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="exemplo@email.com"
-                    required>
-            </div>
-            <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="inputPassword4" name="senha" required>
-            </div>
-            <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">Confirme a senha</label>
-                <input type="password" class="form-control" id="inputPassword4" name="confirma_senha" required>
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary w-100"
-                    style="background-color: #20B2AA; border-color: #20B2AA;">Cadastrar</button>
-            </div>
-        </form>
-
-        <div id="link-cadastro" class="col-12 mt-3 text-center">
-            <a href="logar.php">Já possui uma conta? Faça login!</a>
-        </div>
-    </div>
-</body>
-
-</html>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light"><div class="container justify-content-center"><a class="navbar-brand" href="#" style="color: #20B2AA;"><b>Paper</b><b style="color: #DB7093;">Bloom❀</b></a></div></nav>< !-- Formulário de Cadastro --><div class="card-form container mt-5 p-4 shadow-sm rounded"><h2 class="mb-4">Cadastro</h2><form class="row g-3" action="register_logic.php" method="POST"><div class="col-md-12"><label for="inputEmail4" class="form-label">Email</label><input type="email" class="form-control" id="inputEmail4" name="email" placeholder="exemplo@email.com"
+        required></div><div class="col-md-6"><label for="inputPassword4" class="form-label">Senha</label><input type="password" class="form-control" id="inputPassword4" name="senha" required></div><div class="col-md-6"><label for="inputPassword4" class="form-label">Confirme a senha</label><input type="password" class="form-control" id="inputPassword4" name="confirma_senha" required></div><div class="col-12"><button type="submit" class="btn btn-primary w-100"
+        style="background-color: #20B2AA; border-color: #20B2AA;">Cadastrar</button></div></form><div id="link-cadastro" class="col-12 mt-3 text-center"><a href="logar.php">Já possui uma conta? <b style="color: #DB7093;">Faça login !</b></a></div></div></body></html>

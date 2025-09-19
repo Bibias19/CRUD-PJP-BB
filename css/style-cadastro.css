@@ -1,13 +1,16 @@
+
 body {
   font-family: "Montserrat", sans-serif;
-  background: url('img/6575431-papel-de-parede-bonito-natureza-flor-flor-folha-minimalista-feminino-fundo-vetor.jpg') no-repeat center center fixed;
-  background-size: cover;
   margin: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
   background-color: #f0f0f0;
   padding: 20px;
+  background-image: url('../img/6575431-papel-de-parede-bonito-natureza-flor-flor-folha-minimalista-feminino-fundo-vetor.jpg')!important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 
@@ -55,13 +58,16 @@ body {
 
 .card-form {
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
   width: 650px;
   max-width: 90%;
   padding: 15px 25px;
-  transform: translateY(10%);
-  margin-top: 80px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 35px; /* Ajuste fino para compensar a navbar */
 }
 
 

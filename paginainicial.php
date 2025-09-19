@@ -34,6 +34,11 @@ if ($conexao->connect_error) {
         <b>Paper</b><b style="color: #DB7093;">Bloom❀</b>
       </a>
     </div>
+    <form action="logout.php" method="POST" class="d-inline me-auto">
+      <button type="submit" class="btn btn-sm custom-pink-btn">
+        <i class="fas fa-sign-out-alt"></i> Sair
+      </button>
+    </form>
   </nav>
   <?php if (isset($_SESSION['message'])): ?>
     <div class="alert alert-<?= $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
@@ -42,43 +47,73 @@ if ($conexao->connect_error) {
     </div>
     <?php unset($_SESSION['message']); ?>
   <?php endif; ?>
-
-  <div class="container my-5">
-    <!-- Formulário de cadastro -->
-    <h3>Adicionar Produto</h3>
-    <form action="salvar_produto.php" method="POST" class="row g-3 mb-4" enctype="multipart/form-data">
-      <div class="col-md-2">
-        <label class="col-sm-3 col-form-label">Imagem</label>
-        <div class="col-sm-6">
-          <input type="file" class="form-control" name="imagem" accept="img/*" onchange="previewImage(event)">
-          <img id="preview" src="img\Imagem indisponivel.png" style="max-width:120px;max-height:120px;margin-top:10px; ">
+  <div class="container mt-5">
+    <div class="card-form p-4 shadow-sm rounded">
+      <h3 class="mb-4">Adicionar Produto</h3>
+      <form action="salvar_produto.php" method="POST" enctype="multipart/form-data">
+        <!-- Seção de Imagem -->
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label">Imagem</label>
+          <div class="col-sm-6 img-container">
+            <img id="preview" src="img/image.png" alt="Prévia da imagem" class="product-image">
+          </div>
         </div>
-      </div>
-      <div class="col-md-2">
-        <label for="codigo" class="form-label">Código</label>
-        <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Ex: 001" required>
-      </div>
-      <div class="col-md-3">
-        <label for="tipo" class="form-label">Tipo do Produto</label>
-        <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Ex: Lápis grafite" required>
-      </div>
-      <div class="col-md-3">
-        <label for="marca" class="form-label">Marca</label>
-        <input type="text" class="form-control" id="marca" name="marca" placeholder="Ex: Faber-Castel" required>
-      </div>
-      <div class="col-md-2">
-        <label for="preco" class="form-label">Preço</label>
-        <input type="number" step="0.01" class="form-control" id="preco" name="preco" placeholder="R$ 0,00" required>
-      </div>
-      <div class="col-md-2">
-        <label for="quantidade" class="form-label">Quantidade</label>
-        <input type="number" class="form-control" id="quantidade" name="quantidade" placeholder="0" required>
-      </div>
-      <div class="col-12 d-flex justify-content-center mt-3">
-        <button type="submit" class="btn btn-primary">Adicionar Produto</button>
-      </div>
-    </form>
 
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label">Selecionar imagem</label>
+          <div class="col-sm-6">
+            <input type="file" class="form-control" name="imagem" accept="image/*" onchange="previewImage(event)">
+          </div>
+        </div>
+
+        <!-- Campos do formulário -->
+        <div class="row mb-3">
+          <label for="codigo" class="col-sm-3 col-form-label">Código</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Ex: 001" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="tipo" class="col-sm-3 col-form-label">Tipo do Produto</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Ex: Lápis grafite" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="marca" class="col-sm-3 col-form-label">Marca</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ex: Faber-Castel" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="preco" class="col-sm-3 col-form-label">Preço</label>
+          <div class="col-sm-9">
+            <div class="input-group">
+              <span class="input-group-text">R$</span>
+              <input type="number" step="0.01" class="form-control" id="preco" name="preco" placeholder="0.00" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="quantidade" class="col-sm-3 col-form-label">Quantidade</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" id="quantidade" name="quantidade" placeholder="0" required>
+          </div>
+        </div>
+
+        <div class="row mt-6">
+          <div class="col-sm-12 offset-sm-3">
+            <button type="submit" class="btn btn-primary">Adicionar Produto</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container" id="tabela-produto">
     <!-- Tabela de produtos -->
     <h3 class="mt-5">Produtos em Estoque</h3>
     <?php
@@ -155,18 +190,18 @@ if ($conexao->connect_error) {
 
 <?php
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
-    $nome_arquivo = basename($_FILES['imagem']['name']);
-    $caminho = 'img/' . $nome_arquivo;
-    move_uploaded_file($_FILES['imagem']['tmp_name'], $caminho);
+  $nome_arquivo = basename($_FILES['imagem']['name']);
+  $caminho = 'img/' . $nome_arquivo;
+  move_uploaded_file($_FILES['imagem']['tmp_name'], $caminho);
 } else {
-    $caminho = 'img/Imagem indisponivel.png';
+  $caminho = 'img/Imagem indisponivel.png';
 }
 ?>
 
 <?php
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
-    $imagem = file_get_contents($_FILES['imagem']['tmp_name']);
+  $imagem = file_get_contents($_FILES['imagem']['tmp_name']);
 } else {
-    $imagem = file_get_contents('img/Imagem indisponivel.png');
+  $imagem = file_get_contents('img/Imagem indisponivel.png');
 }
 ?>

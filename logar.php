@@ -33,9 +33,6 @@ session_start();
     <?php if (isset($_SESSION['message'])): ?>
       <div class="alert alert-<?= $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
         <?= $_SESSION['message'] ?>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <?php unset($_SESSION['message']); ?>
     <?php endif ?>
@@ -44,7 +41,7 @@ session_start();
       <form class="row g-3" method="POST" action="authenticate.php">
         <div class="col-md-12">
           <label for="inputEmail4" class="form-label">Email</label>
-          <input type="email" class="form-control" id="inputEmail4" name="email" required>
+          <input type="email" class="form-control" id="inputEmail" name="email" required>
         </div>
         <div class="col-md-12">
           <label for="inputPassword4" class="form-label">Senha</label>
@@ -54,10 +51,19 @@ session_start();
           <button type="submit" class="btn btn-primary">Login</button>
         </div>
         <div class="col-12" id="link-cadastro">
-          <a href="cadastrar.php">Não possui uma conta? Cadastre-se</a>
+          <a href="cadastrar.php">Não possui uma conta? <b style="color:  #20B2AA;">Cadastre-se </b></a>
         </div>
       </form>
     </div>
+    <script>
+        // Timer hide alert message
+        setTimeout(() =>  {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }, 1500);     
+    </script>                     
 </body>
 
 </html>
